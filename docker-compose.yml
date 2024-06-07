@@ -1,0 +1,29 @@
+
+services:
+  server_api:
+    build:
+      src/Server/Hako.Api/
+    ports:
+      - 1488:8080
+    depends_on: server_core
+
+  server_core:
+    build:
+      src/Server/Hako.Server/
+
+  server_telegram:
+    build:
+      src/Server/Hako.Telegram/
+    depends_on: server_core
+
+  database_redis:
+    image: redis
+
+  database_pg:
+    volumes:
+     - postgres:/data/postgres
+    image: postgres
+
+
+volumes:
+  postgres:
