@@ -1,10 +1,13 @@
-﻿using Server.ServerGate.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using Server.Persistence;
+using Server.ServerGate.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
-
+builder.Services.AddDbContext<HakoDbContext>(options =>
+    options.UseNpgsql("Host=localhost;Database=HakoDb;"));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
