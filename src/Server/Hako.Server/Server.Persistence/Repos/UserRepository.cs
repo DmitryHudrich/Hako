@@ -23,8 +23,15 @@ public class UserRepository(HakoDbContext dbContext) {
         async Task<User?> HandleFilterAsync<TCompare>(FilterHandler<TCompare> handler) {
             return filter is TCompare f
                 ? await handler(f)
-                : throw new ArgumentException($"expected {nameof(TCompare)}, but {nameof(filter)}");
+                : throw new ArgumentException($"expected {nameof(TCompare)}, but {nameof(TFilter)}");
         }
+    }
+
+    public async Task<UInt64?> AddUserAsync(User user) {
+        _ = dbContext.Users.Add(user);
+        var entries = await dbContext.SaveChangesAsync();
+        // return entries < 0 ? user.Id : null;
+        return 0;
     }
 
     private async Task<User?> ByLoginAsync(String login) {

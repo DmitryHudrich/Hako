@@ -13,10 +13,12 @@
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Server.Persistence\Server.Persistence.csproj" />
+    <ProjectReference Include="..\Server.Domain\Server.Domain.csproj" />
   </ItemGroup>
 
 </Project>
