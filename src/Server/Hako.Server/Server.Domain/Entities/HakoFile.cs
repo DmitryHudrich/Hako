@@ -1,6 +1,6 @@
 namespace Server.Domain.Entities;
 
-public class HakoFile {
+public class HakoFile : IEntity {
     public Int64 Id { get; set; }
     public required String PublicName { get; set; }
     public required String Description { get; set; }

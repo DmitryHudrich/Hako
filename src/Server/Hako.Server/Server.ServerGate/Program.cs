@@ -2,6 +2,7 @@
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Server.Persistence;
 using Server.Persistence.Repos;
+using Server.Persistence.Utils;
 using Server.ServerGate.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddGrpc();
 builder.Services.AddDbContext<HakoDbContext>(options =>
     options.UseNpgsql("Host=172.17.0.2;Database=HakoDb;Username=postgres;Password=postgresmaster;"));
+builder.Services.AddStackExchangeRedisCache(options => {
+    options.Configuration = "172.17.0.4";
+    options.InstanceName = "local";
+});
 
+builder.Services.AddScoped<CacheHelper>();
 builder.Services.AddScoped<UserRepository>();
 
 var app = builder.Build();

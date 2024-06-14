@@ -19,4 +19,11 @@ public class ServerService(ILogger<ServerService> logger, UserRepository reposit
             Message = id.ToString(),
         };
     }
+
+    public override async Task<HelloReply> TestFeatureGetUser(Empty request, ServerCallContext context) {
+        var user = await repository.GetUserByFilterAsync(UserFilterType.ById, (Int64)2);
+        return new HelloReply {
+            Message = user?.Name,
+        };
+    }
 }
