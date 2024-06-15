@@ -7,8 +7,8 @@ namespace Server.Persistence.Utils;
 
 public class CacheHelper(ILogger<CacheHelper> logger, IDistributedCache cache) {
     public async Task<TEntity?> CheckCacheAsync<TEntity, TKey>(TKey id, Func<ValueTask<TEntity?>> dbAction)
-        where TEntity : class, IEntity
-        where TKey : notnull {
+    where TEntity : class, IEntity
+    where TKey : notnull {
         var jsonEntity = await cache.GetStringAsync(id.GetHashCode().ToString());
         return jsonEntity is null ? await CacheMissAsync(dbAction) : CacheHit<TEntity>(jsonEntity);
     }
@@ -20,7 +20,8 @@ public class CacheHelper(ILogger<CacheHelper> logger, IDistributedCache cache) {
         return entity;
     }
 
-    private async Task<TEntity?> CacheMissAsync<TEntity>(Func<ValueTask<TEntity?>> dbAction) where TEntity : class, IEntity {
+    private async Task<TEntity?> CacheMissAsync<TEntity>(Func<ValueTask<TEntity?>> dbAction)
+    where TEntity : class, IEntity {
         logger.LogDebug("Cache miss");
         var entity = await dbAction();
         if (entity is null) {
