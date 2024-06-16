@@ -2,28 +2,54 @@
 services:
   server_api:
     build:
-      src/Server/Hako.Api/
-    volumes:
-      - type: bind
-        source: ./src/Server/Hako.Api
-        target: /opt/app/static
+      context: ./src/
+      dockerfile: ./Server/Hako.Api/Dockerfile.dev
+    command: dotnet watch
+    develop:
+      watch:
+        - action: sync
+          path: ./src/Server/Hako.Api
+          target: /source/
     ports:
       - 1488:8080
-    depends_on: server_core
+    depends_on: 
+      - server_core
 
   server_core:
     build:
-      src/Server/Hako.Server/
+      context: ./src/
+      dockerfile: ./Server/Hako.Server/Dockerfile.dev
+    command: dotnet watch
+    environment:
+      - RUNNING_IN_CONTAINER=1
+    ports:
+      - 1488:8080
+    develop:
+      watch:
+        - action: sync
+          path: ./src/Server/Hako.Server
+          target: /source/
 
   server_telegram:
     build:
-      src/Server/Hako.Telegram/
-    depends_on: server_core
+      context: ./src/
+      dockerfile: ./Server/Hako.Telegram/Dockerfile.dev
+    command: dotnet watch
+    develop:
+      watch:
+        - action: sync
+          path: ./src/Server/Hako.Telegram
+          target: /source/
+    depends_on: 
+      - server_core
 
   database_redis:
     image: redis
 
   database_pg:
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     volumes:
      - postgres:/data/postgres
     image: postgres

@@ -5,7 +5,7 @@ services:
       context: ./src/
       dockerfile: ./Server/Hako.Api/Dockerfile
     ports:
-      - 1488:8080
+      - 1111:8080
     depends_on: 
       - server_core
 
@@ -13,6 +13,9 @@ services:
     build:
       context: ./src/
       dockerfile: ./Server/Hako.Server/Dockerfile
+    ports:
+      - 1488:8080
+
   server_telegram:
     build:
       context: ./src/
@@ -24,6 +27,9 @@ services:
     image: redis
 
   database_pg:
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     volumes:
      - postgres:/data/postgres
     image: postgres

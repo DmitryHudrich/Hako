@@ -1,0 +1,13 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+RUN useradd -ms /bin/sh -u 1001 bebraapp
+USER bebraapp
+
+ENV DOTNET_WATCH_RESTART_ON_RUDE_EDIT=1
+
+WORKDIR /source/
+
+COPY --chown=bebraapp:bebraapp Protos/. ./proto/
+COPY --chown=bebraapp:bebraapp Server/Hako.Api/Api.Public/. ./Api.Public/
+COPY --chown=bebraapp:bebraapp Server/Hako.Api/Api.ServiceClient/. ./Api.ServiceClient/
+
+WORKDIR /source/Api.Public
