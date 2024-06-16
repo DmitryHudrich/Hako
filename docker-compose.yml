@@ -13,6 +13,8 @@ services:
     build:
       context: ./src/
       dockerfile: ./Server/Hako.Server/Dockerfile
+    environment:
+      - RUNNING_IN_CONTAINER=1
     ports:
       - 1488:8080
 
