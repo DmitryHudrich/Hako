@@ -1,6 +1,11 @@
 ﻿namespace Server.Utils;
 
-public class Class1
+public class ConfigurationStorage
+{
+
+}
+
+internal class Configuration
 {
 
 }
