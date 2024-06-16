@@ -2,8 +2,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
-COPY Server/Hako.Telegram/*.sln .
-
 COPY Protos/. ./proto/
 COPY Server/Hako.Telegram/Telegram.Main/. ./Telegram.Main/
 COPY Server/Hako.Telegram/Telegram.ServiceClient/. ./Telegram.ServiceClient/

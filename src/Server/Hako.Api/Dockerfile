@@ -2,8 +2,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
-COPY Server/Hako.Api/*.sln .
-
 COPY Protos/. ./proto/
 COPY Server/Hako.Api/Api.Public/. ./Api.Public/
 COPY Server/Hako.Api/Api.ServiceClient/. ./Api.ServiceClient/

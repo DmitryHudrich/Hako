@@ -1,6 +1,5 @@
 ﻿namespace Server.Logic;
 
-public class asd
-{
+public class asd {
 
 }

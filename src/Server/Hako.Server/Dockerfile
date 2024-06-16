@@ -8,8 +8,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
-COPY Server/Hako.Server/*.sln .
-
 COPY Protos/. ./proto/
 COPY Server/Hako.Server/Server.Domain/. ./Server.Domain/
 COPY Server/Hako.Server/Server.ControlPanel/. ./Server.ControlPanel/
