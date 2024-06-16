@@ -6,6 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <Target Name="PreBuildProtoCopying" BeforeTargets="PreBuildEvent">
+    <Exec Command="[ -d ../../../Protos/* ] %26%26 rm -f ../proto/* ; cp ../../../Protos/* ../proto/ %26%26 2>/dev/null || : echo proto-copying[unix]" Condition="$([MSBuild]::IsOSUnixLike())" />
+    <!-- <Exec Command="del /S ..\proto\* %26%26 copy ..\..\..\Protos\* ..\proto\ %26%26 echo proto-copying[windows]" Condition="!'$([MSBuild]::IsOSUnixLike())'" /> -->
+  </Target>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />

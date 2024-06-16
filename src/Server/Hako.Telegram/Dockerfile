@@ -2,19 +2,14 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
-COPY *.sln .
+COPY Server/Hako.Telegram/*.sln .
 
-COPY Telegram.Main/*.csproj ./Telegram.Main/
-COPY Telegram.ServiceClient/*.csproj ./Telegram.ServiceClient/
-
-RUN dotnet restore
-
-# copy everything else and build app
-COPY Telegram.Main/. ./Telegram.Main/
-COPY Telegram.ServiceClient/. ./Telegram.ServiceClient/
+COPY Protos/. ./proto/
+COPY Server/Hako.Telegram/Telegram.Main/. ./Telegram.Main/
+COPY Server/Hako.Telegram/Telegram.ServiceClient/. ./Telegram.ServiceClient/
 
 WORKDIR /source/Telegram.Main
-RUN dotnet publish -c release -o /app --no-restore 
+RUN dotnet publish -c release -o /app 
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0

@@ -12,7 +12,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <Protobuf Include="..\..\..\Protos\greet.proto" GrpcServices="Client" Link="Protos\greeter.proto" />
+    <Protobuf Include="..\proto\greet.proto" GrpcServices="Client"/>
     <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />
   </ItemGroup>
 

@@ -2,19 +2,23 @@
 services:
   server_api:
     build:
-      src/Server/Hako.Api/
+      context: ./src/
+      dockerfile: ./Server/Hako.Api/Dockerfile
     ports:
       - 1488:8080
-    depends_on: server_core
+    depends_on: 
+      - server_core
 
   server_core:
     build:
-      src/Server/Hako.Server/
-
+      context: ./src/
+      dockerfile: ./Server/Hako.Server/Dockerfile
   server_telegram:
     build:
-      src/Server/Hako.Telegram/
-    depends_on: server_core
+      context: ./src/
+      dockerfile: ./Server/Hako.Telegram/Dockerfile
+    depends_on: 
+      - server_core
 
   database_redis:
     image: redis

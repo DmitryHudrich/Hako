@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <Target Name="PreBuildProtoCopying" BeforeTargets="PreBuildEvent">
-    <Exec Command="rm ../proto/* %26%26 cp ../../../Protos/* ../proto/ %26%26 echo proto-copying[unix]" Condition="$([MSBuild]::IsOSUnixLike())" />
-    <Exec Command="del /S ..\proto\* %26%26 copy ..\..\..\Protos\* ..\proto\ %26%26 echo proto-copying[windows]" Condition="!'$([MSBuild]::IsOSUnixLike())'" />
+    <Exec Command="[ -d ../../../Protos/* ] %26%26 rm -f ../proto/* ; cp ../../../Protos/* ../proto/ %26%26 2>/dev/null || : echo proto-copying[unix]" Condition="$([MSBuild]::IsOSUnixLike())" />
+    <!-- <Exec Command="del /S ..\proto\* %26%26 copy ..\..\..\Protos\* ..\proto\ %26%26 echo proto-copying[windows]" Condition="!'$([MSBuild]::IsOSUnixLike())'" /> -->
   </Target>
 
   <ItemGroup>
-    <Protobuf Include="..\..\..\Protos\greet.proto" GrpcServices="Server" />
+    <Protobuf Include="..\proto\greet.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>
