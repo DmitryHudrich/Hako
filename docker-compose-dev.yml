@@ -11,7 +11,7 @@ services:
           path: ./src/Server/Hako.Api
           target: /source/
     ports:
-      - 1488:8080
+      - 1234:8080
     depends_on: 
       - server_core
 

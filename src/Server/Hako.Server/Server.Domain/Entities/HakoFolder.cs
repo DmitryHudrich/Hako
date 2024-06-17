@@ -1,7 +1,7 @@
 namespace Server.Domain.Entities;
 
-public class HakoFolder : IEntity {
-    public Int64 Id { get; set; }
+public class HakoFolder : IEntity<Guid> {
+    public Guid Id { get; set; }
     public required String Name { get; set; }
     public required String Description { get; set; }
     public required HakoFolder ContainedFolder { get; set; }

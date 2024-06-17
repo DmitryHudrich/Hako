@@ -1,5 +1,6 @@
 namespace Server.Domain.Entities;
 
-public interface IEntity {
-    Int64 Id { get; }
+public interface IEntity<TKey>
+where TKey : notnull {
+    TKey Id { get; }
 }
