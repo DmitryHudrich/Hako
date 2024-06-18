@@ -1,5 +1,3 @@
-
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Server.Domain.Entities;
 using Server.Persistence.Utils;
@@ -22,8 +20,11 @@ where TKey : notnull {
         return entries > 0 ? entity.Id : default;
     }
 
-    protected async Task<TEntity?> ByIdAsync(TKey id) {
-        return await cacheHelper.CheckCacheAsync(id, () => dbContext.Set<TEntity>().FindAsync(id));
+    /* IEnumerable here is only for сompatibility with delegate. 
+     * This method always returns only one entity. */
+    protected async Task<IEnumerable<TEntity>> ByIdAsync(TKey id) {
+        var entity = await cacheHelper.CheckCacheAsync(id, () => dbContext.Set<TEntity>().FindAsync(id));
+        return entity is null ? [] : [entity];
     }
 
     protected async Task<Int64> DeleteEntitiesAsync(IEnumerable<TKey> entities) {

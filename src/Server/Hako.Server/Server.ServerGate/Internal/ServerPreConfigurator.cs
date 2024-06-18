@@ -5,7 +5,9 @@ using Server.Persistence.Utils;
 
 namespace Server.ServerGate.Internal;
 
-internal static class PreConfigurator {
+internal static class ServerPreConfigurator {
+    public static String ConnectionString => Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING") ?? throw new DatabaseConnectionNotSetException();
+
     public static void Configure(WebApplicationBuilder builder) {
         ConfigureServices(builder.Services);
         if (Environment.GetEnvironmentVariable("RUNNING_IN_CONTAINER") == null) {

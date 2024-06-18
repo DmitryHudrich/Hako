@@ -1,7 +1,4 @@
-﻿using Grpc.Net.Client;
-using Server.ServerGate;
-
-namespace Api.ServiceClient;
+﻿namespace Api.ServiceClient;
 
 public class Class1
 {

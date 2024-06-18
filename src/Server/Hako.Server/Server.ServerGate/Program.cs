@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Server.Persistence;
-using Server.Persistence.Repos;
-using Server.Persistence.Utils;
-using Server.ServerGate.Internal;
+﻿using Server.ServerGate.Internal;
 using Server.ServerGate.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-PreConfigurator.Configure(builder);
+ServerPreConfigurator.Configure(builder);
 
 var app = builder.Build();
+
+if (Environment.GetEnvironmentVariable("RUNNING_IN_CONTAINER") != null) {
+    app.Logger.LogInformation("Running in container");
+}
 
 // Configure the HTTP request pipeline.
 app.MapGrpcService<ServerService>();

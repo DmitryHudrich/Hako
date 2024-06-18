@@ -5,7 +5,7 @@ using Server.Domain.Entities;
 
 namespace Server.Persistence.Utils;
 
-public class CacheHelper<TEntity, TKey>(ILogger<CacheHelper<TEntity, TKey>> logger, IDistributedCache cache) 
+public class CacheHelper<TEntity, TKey>(ILogger<CacheHelper<TEntity, TKey>> logger, IDistributedCache cache)
     where TKey : notnull
     where TEntity : class, IEntity<TKey> {
     /// <summary>
