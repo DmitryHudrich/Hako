@@ -6,18 +6,28 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <Target Name="PreBuildProtoCopying" BeforeTargets="PreBuildEvent">
-    <Exec Command="[ -d ../../../Protos/* ] %26%26 rm -f ../proto/* ; cp ../../../Protos/* ../proto/ %26%26 2>/dev/null || : echo proto-copying[unix]" Condition="$([MSBuild]::IsOSUnixLike())" />
-    <!-- <Exec Command="del /S ..\proto\* %26%26 copy ..\..\..\Protos\* ..\proto\ %26%26 echo proto-copying[windows]" Condition="!'$([MSBuild]::IsOSUnixLike())'" /> -->
-  </Target>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <Target Name="PreBuildProtoCopying" BeforeTargets="PreBuildEvent">
+    <Exec Command="[ -d ../../../Protos/* ] %26%26 rm -rf ../proto/* ; cp ../../../Protos/* ../proto/ %26%26 2&gt;/dev/null || : echo proto-copying[unix]" Condition="$([MSBuild]::IsOSUnixLike())" />
+  </Target>
+
   <ItemGroup>
     <ProjectReference Include="..\Api.ServiceClient\Api.ServiceClient.csproj" />
+    <PackageReference Include="Google.Protobuf" Version="3.27.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.64.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <Protobuf Include="..\proto\main.proto" GrpcServices="Client" />
+    <Protobuf Include="..\proto\user_registration.proto" GrpcServices="Client" />
+    <Protobuf Include="..\proto\user_login.proto" GrpcServices="Client" />
+    <Protobuf Include="..\proto\file.proto" GrpcServices="Client" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />
+
   </ItemGroup>
 
 </Project>
