@@ -22,10 +22,33 @@ public class FileService(ILogger<AuthService> logger, HakoDbContext dbContext) :
                 user.Id == Int64.Parse(context.GetHttpContext().User.FindFirstValue(ClaimTypes.NameIdentifier)!)) ??
                     throw new Exception("User not found"),
         };
+        dbContext.HakoFiles.Add(file);
+        await dbContext.SaveChangesAsync();
         return new AddFileResponse {
             Message = "File added successfully.",
             Success = true,
             Detail = new FileInfo { InternalPath = internalName }
+        };
+    }
+
+    [Authorize]
+    public override async Task<DeleteFileResponse> DeleteFile(DeleteFileRequest request, ServerCallContext context) {
+        var fileinfo = await dbContext.HakoFiles.FirstOrDefaultAsync(file => file.Path == request.InternalPath);
+        if (fileinfo == null) {
+            return new DeleteFileResponse {
+                Message = "File not found.",
+                Success = false,
+                Detail = new FileDeleteInfo { IsFileFound = false }
+            };
+        }
+        await Task.Run(() => File.Delete(fileinfo.Path));
+
+        dbContext.HakoFiles.Remove(fileinfo);
+        await dbContext.SaveChangesAsync();
+        return new DeleteFileResponse {
+            Message = "File deleted successfully.",
+            Success = true,
+            Detail = new FileDeleteInfo { IsFileFound = true }
         };
     }
 }

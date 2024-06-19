@@ -19,4 +19,5 @@ service HakoAuthService {
 
 service HakoFileService {
   rpc AddFile(AddFileRequest) returns (AddFileResponse);
+  rpc DeleteFile(DeleteFileRequest) returns (DeleteFileResponse);
 }

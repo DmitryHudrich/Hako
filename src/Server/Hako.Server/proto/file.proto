@@ -15,3 +15,17 @@ message AddFileResponse {
 message FileInfo {
     string internalPath = 1;
 }
+
+message DeleteFileRequest {
+    string internalPath = 1;
+}
+
+message DeleteFileResponse {
+    string message = 1;
+    bool success = 2;
+    FileDeleteInfo detail = 3;
+}
+
+message FileDeleteInfo {
+    bool isFileFound = 1;
+}
