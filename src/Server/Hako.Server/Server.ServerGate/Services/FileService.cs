@@ -51,4 +51,20 @@ public class FileService(ILogger<AuthService> logger, HakoDbContext dbContext) :
             Detail = new FileDeleteInfo { IsFileFound = true }
         };
     }
+
+    [Authorize]
+    public override async Task<GetFileSignaturesResponse> GetFileSigntatures(GetFileSignaturesRequest request, ServerCallContext context) {
+        var files = await dbContext.HakoFiles.ToListAsync();
+
+        var response = new GetFileSignaturesResponse { Message = "Success", Success = true, Detail = new GetFileSignaturesInfo() };
+        foreach (var file in files) {
+            response.Detail.FileSignatureInfo.Add(new FileSignatureInfo {
+                InternalPath = file.Path,
+                PublicName = file.PublicName,
+                Description = file.Description,
+            });
+        }
+
+        return response;
+    }
 }

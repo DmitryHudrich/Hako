@@ -29,3 +29,37 @@ message DeleteFileResponse {
 message FileDeleteInfo {
     bool isFileFound = 1;
 }
+
+message GetFileRequest {
+    string internalPath = 1;
+}
+
+message GetFileResponse {
+    string message = 1;
+    bool success = 2;
+    GetFileInfo detail = 3;
+}
+
+message GetFileInfo {
+    bool isFileFound = 1;
+    bytes data = 2;
+}
+
+message GetFileSignaturesRequest {
+}
+
+message GetFileSignaturesResponse {
+    string message = 1;
+    bool success = 2;
+    GetFileSignaturesInfo detail = 3;
+}
+
+message GetFileSignaturesInfo {
+    repeated FileSignatureInfo FileSignatureInfo = 1;
+}
+
+message FileSignatureInfo {
+    string internalPath = 1;
+    string publicName = 2;
+    string description = 3;
+}
