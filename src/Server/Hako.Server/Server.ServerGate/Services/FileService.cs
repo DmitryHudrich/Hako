@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Google.Protobuf;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -66,5 +67,23 @@ public class FileService(ILogger<AuthService> logger, HakoDbContext dbContext) :
         }
 
         return response;
+    }
+
+    [Authorize]
+    public override async Task<GetFileResponse> GetFile(GetFileRequest request, ServerCallContext context) {
+        var fileinfo = await dbContext.HakoFiles.FirstOrDefaultAsync(file => file.Path == request.InternalPath);
+        if (fileinfo == null) {
+            return new GetFileResponse {
+                Message = "File not found.",
+                Success = false,
+                Detail = new GetFileInfo { IsFileFound = false }
+            };
+        }
+        var content = await File.ReadAllBytesAsync(fileinfo.Path);
+        return new GetFileResponse {
+            Message = "Success",
+            Success = true,
+            Detail = new GetFileInfo { IsFileFound = true, Data = ByteString.CopyFrom(content) }
+        };
     }
 }
