@@ -23,6 +23,7 @@ internal static class ServerPreConfigurator {
         services.AddAuthorization();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => {
+                options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new TokenValidationParameters {
                     // указывает, будет ли валидироваться издатель при валидации токена
                     ValidateIssuer = true,
@@ -35,9 +36,10 @@ internal static class ServerPreConfigurator {
                     // будет ли валидироваться время существования
                     ValidateLifetime = true,
                     // установка ключа безопасности
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SUPER_DUPER_SECRET_KEY")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SUPER_DUPER_SECRET_KEY_BEBRA_1488_SPASIBO_DANE_ZA_FRONT!!!123")),
                     // валидация ключа безопасности
                     ValidateIssuerSigningKey = true,
+                    IssuerSigningKeys = [new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SUPER_DUPER_SECRET_KEY_BEBRA_1488_SPASIBO_DANE_ZA_FRONT!!!123"))]
                 };
             });
         services.AddGrpc();

@@ -6,4 +6,5 @@ public class HakoFile : IEntity<Guid> {
     public required String Path { get; set; }
     public required String Description { get; set; }
     public required DateTime Creation { get; set; }
+    public required User Owner { get; set; }
 }
