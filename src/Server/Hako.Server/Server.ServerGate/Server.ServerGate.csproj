@@ -14,10 +14,14 @@
   <ItemGroup>
     <Protobuf Include="..\proto\main.proto" GrpcServices="Server" />
     <Protobuf Include="..\proto\user_registration.proto" GrpcServices="Server" />
+    <Protobuf Include="..\proto\user_login.proto" GrpcServices="Server" />
+    <Protobuf Include="..\proto\file.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.6" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
@@ -26,8 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Server.Domain\Server.Domain.csproj" />
-    <ProjectReference Include="..\Server.Utils\Server.Utils.csproj" />
-    <ProjectReference Include="..\Server.Logic\Server.Logic.csproj" />
   </ItemGroup>
 
 </Project>

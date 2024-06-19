@@ -10,10 +10,7 @@ WORKDIR /source
 
 COPY Protos/. ./proto/
 COPY Server/Hako.Server/Server.Domain/. ./Server.Domain/
-COPY Server/Hako.Server/Server.ControlPanel/. ./Server.ControlPanel/
-COPY Server/Hako.Server/Server.Logic/. ./Server.Logic/
 COPY Server/Hako.Server/Server.ServerGate/. ./Server.ServerGate/
-COPY Server/Hako.Server/Server.Utils/. ./Server.Utils/
 
 WORKDIR /source/Server.ServerGate
 RUN dotnet publish -c release -o /app 

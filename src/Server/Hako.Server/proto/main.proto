@@ -1,11 +1,22 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 import "user_registration.proto";
+import "user_login.proto";
+import "file.proto";
 
 option csharp_namespace = "Server.ServerGate";
 
 // The greeting service definition.
-service HakoServerGate {
+service HakoAuthService {
   // Sends a greeting
-  rpc RegistrationUser (UserRegistrationRequest) returns (UserRegistrationResponse);
+  rpc RegistrationUser(UserRegistrationRequest)
+      returns (UserRegistrationResponse);
+  rpc LoginUser (UserLoginRequest) returns (UserLoginResponse);
+  rpc RefreshToken(RefreshRequest) returns (RefreshTokenResponse);
+}
+
+service HakoFileService {
+  rpc AddFile(AddFileRequest) returns (AddFileResponse);
 }

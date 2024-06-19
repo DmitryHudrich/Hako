@@ -1,5 +1,9 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Server.Logic;
+using Server.Logic.Internal;
 using Server.Persistence;
 
 namespace Server.ServerGate.Internal;
@@ -16,6 +20,26 @@ internal static class ServerPreConfigurator {
 
     private static void ConfigureServices(IServiceCollection services) {
         // Add services to the container.
+        services.AddAuthorization();
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options => {
+                options.TokenValidationParameters = new TokenValidationParameters {
+                    // указывает, будет ли валидироваться издатель при валидации токена
+                    ValidateIssuer = true,
+                    // строка, представляющая издателя
+                    ValidIssuer = JwtData.Issuer,
+                    // будет ли валидироваться потребитель токена
+                    ValidateAudience = true,
+                    // установка потребителя токена
+                    ValidAudience = JwtData.Audience,
+                    // будет ли валидироваться время существования
+                    ValidateLifetime = true,
+                    // установка ключа безопасности
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SUPER_DUPER_SECRET_KEY")),
+                    // валидация ключа безопасности
+                    ValidateIssuerSigningKey = true,
+                };
+            });
         services.AddGrpc();
         services.AddDbContext<HakoDbContext>(options =>
             options.UseNpgsql("""
@@ -28,6 +52,5 @@ internal static class ServerPreConfigurator {
             options.Configuration = "database_redis";
             options.InstanceName = "local";
         });
-        services.AddScoped<UserLogicService>();
     }
 }

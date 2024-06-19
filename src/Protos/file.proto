@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+message AddFileRequest {
+    string name = 1;
+    bytes content = 2;
+    string description = 3;
+}
+
+message AddFileResponse {
+    string message = 1;
+    bool success = 2;
+    FileInfo detail = 3;
+}
+
+message FileInfo {
+    string internalPath = 1;
+}

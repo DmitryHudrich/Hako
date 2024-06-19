@@ -1,5 +1,10 @@
 namespace Server.Logic.Internal;
 
+internal static class JwtData {
+    public const String Issuer = "Berberovka";
+    public const String Audience = "Bebra";
+}
+
 internal static class PasswordHasher {
     public static String Hash(String password) {
         return BCrypt.Net.BCrypt.HashPassword(password);
@@ -17,24 +22,24 @@ internal static class UserInfoValidator {
     public static Boolean ValidatePassword(String password, out PasswordProblems[] problems, out PasswordStrength passwordStrength) {
         var problemsList = new List<PasswordProblems>();
         if (password.Length < 8) {
-            problemsList.Add(PasswordProblems.TOO_SHORT);
+            problemsList.Add(PasswordProblems.TooShort);
         }
         if (!password.Any(Char.IsUpper)) {
-            problemsList.Add(PasswordProblems.NO_UPPERCASE);
+            problemsList.Add(PasswordProblems.NoUppercase);
         }
         if (!password.Any(Char.IsLower)) {
-            problemsList.Add(PasswordProblems.NO_LOWERCASE);
+            problemsList.Add(PasswordProblems.NoLowercase);
         }
         if (!password.Any(Char.IsDigit)) {
-            problemsList.Add(PasswordProblems.NO_NUMBER);
+            problemsList.Add(PasswordProblems.NoNumber);
         }
         if (!password.Any(Char.IsSymbol)) {
-            problemsList.Add(PasswordProblems.NO_SYMBOL);
+            problemsList.Add(PasswordProblems.NoSymbol);
         }
         problems = [.. problemsList];
         passwordStrength = problemsList.Count > 2
-            ? PasswordStrength.WEAK
-            : PasswordStrength.STRONG;
+            ? PasswordStrength.Weak
+            : PasswordStrength.Strong;
         return problemsList.Count < 2;
     }
 

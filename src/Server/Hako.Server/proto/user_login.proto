@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+message UserLoginRequest {
+  string login = 1;
+  string password = 2;
+}
+
+message UserLoginResponse {
+  string message = 1;
+  bool success = 2;
+  UserLoginInfo details = 3;
+}
+
+message UserLoginInfo {
+  string bearer = 1;
+  string refresh = 2;
+  bool isLoginExist = 3;
+  bool isPasswordCorrect = 4;
+}
+
+message RefreshTokenResponse {
+  string message = 1;
+  bool success = 2;
+  RefreshTokenInfo details = 3;
+}
+
+message RefreshTokenInfo {
+  string bearer = 1;
+  string refresh = 2;
+}
+
+message RefreshRequest {
+    string refresh = 1;
+    sint64 userId = 2;
+}
