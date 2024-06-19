@@ -1,4 +1,3 @@
-
 services:
   server_api:
     build:
@@ -12,7 +11,7 @@ services:
           target: /source/
     ports:
       - 1234:8080
-    depends_on: 
+    depends_on:
       - server_core
 
   server_core:
@@ -40,7 +39,7 @@ services:
         - action: sync
           path: ./src/Server/Hako.Telegram
           target: /source/
-    depends_on: 
+    depends_on:
       - server_core
 
   database_redis:
@@ -51,8 +50,18 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-     - postgres:/data/postgres
+      - postgres:/data/postgres
     image: postgres
+
+  database_pg_admin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=HJw7U@example.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
+    ports:
+      - 5432:80
+    depends_on:
+      - database_pg
 
 volumes:
   postgres:

@@ -36,6 +36,13 @@ services:
      - postgres:/data/postgres
     image: postgres
 
+  database_pg_admin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=HJw7U@example.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
+    depends_on:
+      - database_pg
 
 volumes:
   postgres:

@@ -11,7 +11,6 @@ COPY --chown=bebraapp:bebraapp Server/Hako.Server/Server.Domain/. ./Server.Domai
 COPY --chown=bebraapp:bebraapp Server/Hako.Server/Server.ControlPanel/. ./Server.ControlPanel/
 COPY --chown=bebraapp:bebraapp Server/Hako.Server/Server.Logic/. ./Server.Logic/
 COPY --chown=bebraapp:bebraapp Server/Hako.Server/Server.ServerGate/. ./Server.ServerGate/
-COPY --chown=bebraapp:bebraapp Server/Hako.Server/Server.Persistence/. ./Server.Persistence/
 COPY --chown=bebraapp:bebraapp Server/Hako.Server/Server.Utils/. ./Server.Utils/
 
 WORKDIR /source/Server.ServerGate

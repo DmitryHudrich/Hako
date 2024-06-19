@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Server.Logic;
 using Server.Persistence;
-using Server.Persistence.Repos;
-using Server.Persistence.Utils;
 
 namespace Server.ServerGate.Internal;
 
@@ -29,7 +28,6 @@ internal static class ServerPreConfigurator {
             options.Configuration = "database_redis";
             options.InstanceName = "local";
         });
-        services.AddScoped(typeof(CacheHelper<,>));
-        services.AddScoped<UserRepository>();
+        services.AddScoped<UserLogicService>();
     }
 }
